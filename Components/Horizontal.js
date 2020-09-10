@@ -1,12 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
-
-
-
+import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Detail from './Detail';
 
 export default function HorizontalView ({props}){
 
-
+  const navigation = useNavigation();
   
   return (<FlatList
     horizontal
@@ -14,6 +13,7 @@ export default function HorizontalView ({props}){
     renderItem = {(item)=> {
       return (
         <View style = {styles.container}>
+        <TouchableOpacity onPress={() => navigation.navigate('Detail', {item: item})}>
       <Image style={styles.images} source={{uri: item.item.imageUrl}} />
       <Text style = {{
         fontSize: 18,
@@ -25,6 +25,7 @@ export default function HorizontalView ({props}){
       <Text style={{ color: 'grey',
         marginTop:5
          }}>rating: {item.item.rating} review: {item.item.review}</Text>
+         </TouchableOpacity>
       </View>
       );
     }}

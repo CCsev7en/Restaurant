@@ -37,9 +37,6 @@ class Home extends React.Component {
     };
 }
 
-search = text => {
-  console.log(text);
-};
 clear = () => {
   this.search.clear();
 };
@@ -135,7 +132,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     flex: 1,
     backgroundColor: 'white',
-    marginTop: Platform.OS == 'ios' ? 30 : 0,
   },
 });
 
