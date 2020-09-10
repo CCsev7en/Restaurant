@@ -13,7 +13,7 @@ export default function HorizontalView ({props}){
     renderItem = {(item)=> {
       return (
         <View style = {styles.container}>
-        <TouchableOpacity onPress={() => navigation.navigate('Detail', {item: item})}>
+        <TouchableOpacity onPress={() => navigation.navigate('Detail', {item: item.item})}>
       <Image style={styles.images} source={{uri: item.item.imageUrl}} />
       <Text style = {{
         fontSize: 18,
