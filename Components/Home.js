@@ -3,8 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, Platform } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import HorizontalView from './Horizontal';
-import { bold } from 'ansi-colors';
-
+import _ from "lodash"
 class Home extends React.Component {
   constructor(props) {
     super(props)
@@ -19,6 +18,7 @@ class Home extends React.Component {
     .then(responseJson=> {
       this.setState({
         result: responseJson,
+        origin: _.cloneDeep(responseJson),
       },
       function() {
         this.arrayholder = responseJson;
@@ -41,23 +41,17 @@ clear = () => {
   this.search.clear();
 };
 SearchFilterFunction(text) {
-    //passing the inserted text in textinput
-    if(text === '') {
-      return fetch('https://my-json-server.typicode.com/CCsev7en/JsonDemo/response')
-    .then(response => response.json())
-    .then(responseJson=> {
+    const {origin} = this.state
+    this.arrayholder = _.cloneDeep(origin);
+    if (text === '') {
       this.setState({
-        result: responseJson,
-      },
-      function() {
-        this.arrayholder = responseJson;
-      }
-      )
-    })
-    .catch(error => {
-      console.log(error);
-    })
-    }
+        //setting the filtered newData on datasource
+        //After setting the data it will automatically re-render the view
+        result: this.arrayholder,
+        search: text,
+      });
+      return;
+    };
     const newData = this.arrayholder.filter(function(item) {
       //applying filter for the inserted text in search bar
 
@@ -65,7 +59,6 @@ SearchFilterFunction(text) {
         
         const itemData = inneritem.name ? inneritem.name.toUpperCase() : ''.toUpperCase();
         const textData = text.toUpperCase();
-        console.log(itemData)
         return itemData.indexOf(textData) > -1;
       });
 
